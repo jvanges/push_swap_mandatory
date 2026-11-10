@@ -89,15 +89,6 @@ Exemple de début de sortie :
 [bench] sa: 0
 ```
 
-### Tests
-
-Le script de test interne n'est pas le bonus `checker`. Il rejoue les opérations
-avec un interpréteur Python, vérifie le résultat et contrôle les erreurs :
-
-```sh
-python3 -I tests/test_push_swap.py
-```
-
 ## Algorithmes et complexité
 
 Toutes les complexités ci-dessous mesurent le **nombre d'instructions
@@ -189,8 +180,7 @@ Objectifs du sujet pour le comportement par défaut :
 | 500 valeurs | `< 12000` | `< 8000` | `< 5500` |
 
 Le choix dépend du désordre ; le nombre d'opérations d'une entrée particulière
-peut donc différer de la moyenne d'entrées uniformément aléatoires. Les tests
-fournis vérifient d'abord la correction, puis affichent les comptes mesurés.
+peut donc différer de la moyenne d'entrées uniformément aléatoires.
 
 ## Resources
 
@@ -205,4 +195,4 @@ fournis vérifient d'abord la correction, puis affichent les comptes mesurés.
 
 ### Utilisation de l'IA
 
-L'intelligence artificielle a été utilisée pour écrire le code conforméa la Norme 42, ainsi que pour rédiger ce README.
+L'intelligence artificielle a été utilisée pour écrire le code conforme à la Norme 42, ainsi que pour rédiger ce README.
