@@ -1,3 +1,5 @@
+# Push_swap
+
 *This project has been created as part of the 42 curriculum by jvan-ges, anaubare.*
 
 ## Description
@@ -18,6 +20,21 @@ Le programme embarque les quatre stratégies exigées :
 Les entiers sont convertis en rangs de `0` à `n - 1`. Cette normalisation
 préserve leur ordre, simplifie les algorithmes et gère les valeurs négatives
 sans modifier la sémantique du tri.
+
+Chaque pile est représentée par un tableau dont l'indice zéro est le sommet.
+Les primitives modifient les piles dans `stack_ops.c`, tandis que `exec_op.c`
+centralise leur exécution, leur affichage et leur comptage. Les algorithmes
+partagent notamment le helper `bring_to_top`, qui choisit le sens de rotation
+le plus court pour la pile **a** ou **b**.
+
+### Opérations disponibles
+
+| Type | Opérations | Effet |
+|---|---|---|
+| Échange | `sa`, `sb`, `ss` | Échanger les deux premiers éléments de **a**, de **b**, ou des deux piles |
+| Transfert | `pa`, `pb` | Déplacer le sommet de **b** vers **a**, ou inversement |
+| Rotation | `ra`, `rb`, `rr` | Faire passer le premier élément en dernier dans **a**, **b**, ou les deux |
+| Rotation inverse | `rra`, `rrb`, `rrr` | Faire passer le dernier élément en premier dans **a**, **b**, ou les deux |
 
 ## Contributions
 
@@ -60,11 +77,12 @@ make re       # recompile entièrement
 
 Les espaces, tabulations et retours à la ligne peuvent séparer plusieurs entiers
 dans un même argument. Un argument vide, un entier invalide, un dépassement de
-la plage `int`, un doublon, un drapeau inconnu ou plusieurs sélecteurs de
-stratégie provoquent `Error\n` sur la sortie d'erreur.
+la plage `int`, un doublon, un drapeau inconnu, plusieurs sélecteurs de
+stratégie ou une répétition de `--bench` provoquent `Error\n` sur la sortie
+d'erreur.
 
-Sans argument, ou avec un seul entier déjà trié, aucune opération n'est écrite.
-Les instructions sont toujours séparées par un unique `\n`, sans texte
+Sans argument, sans entier ou avec une pile déjà triée, aucune opération n'est
+écrite. Les instructions sont toujours séparées par un unique `\n`, sans texte
 supplémentaire sur la sortie standard.
 
 ### Mode benchmark
@@ -84,8 +102,8 @@ Exemple de début de sortie :
 
 ```text
 [bench] disorder: 13.33%
-[bench] strategy: Complex (O(n*log(n)))
-[bench] total operations: 29
+[bench] strategy: Adaptive -> Simple (O(n^2))
+[bench] total operations: 16
 [bench] sa: 0
 ```
 
@@ -119,8 +137,9 @@ entrée déjà triée est détectée et ne produit aucune opération.
 
 ### Medium — `O(n√n)`
 
-Les rangs sont divisés en blocs de taille `k = floor(5 * sqrt(n) / 2)`, donc
-`k = Θ(√n)`. Pour chaque bloc croissant :
+Les rangs sont divisés en blocs de taille
+`k = max(1, floor(5 * floor(sqrt(n)) / 2))`, donc `k = Θ(√n)`. Pour chaque
+bloc croissant :
 
 1. parcourir une fois toutes les valeurs non encore triées ; `pb` isole une
    valeur du bloc et `ra` conserve une autre valeur dans **a** ;
@@ -182,7 +201,7 @@ Objectifs du sujet pour le comportement par défaut :
 Le choix dépend du désordre ; le nombre d'opérations d'une entrée particulière
 peut donc différer de la moyenne d'entrées uniformément aléatoires.
 
-## Resources
+## Ressources
 
 - Sujet `Push_swap`, version 1.2 : règles, opérations, métrique de désordre,
   sélecteurs, benchmark et objectifs de performance.
@@ -195,4 +214,5 @@ peut donc différer de la moyenne d'entrées uniformément aléatoires.
 
 ### Utilisation de l'IA
 
-L'intelligence artificielle a été utilisée pour écrire le code conforme à la Norme 42, ainsi que pour rédiger ce README.
+L'intelligence artificielle a été utilisée pour écrire du code conforme à la
+Norme 42, ainsi que pour rédiger et mettre à jour ce README.
