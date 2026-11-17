@@ -3,7 +3,8 @@
 /*                                                        :::      ::::::::   */
 /*   simple.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jvan-ges <jvan-ges@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jvan-ges <jvan-ges@student.42belgium.be>   +#+  +:+       +#+        */
+/*   By: anaubare <anaubare@student.42belgium.be>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/10 14:18:00 by jvan-ges          #+#    #+#             */
 /*   Updated: 2026/11/10 15:00:00 by jvan-ges         ###   ########.fr       */
