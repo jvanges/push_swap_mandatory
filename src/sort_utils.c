@@ -43,34 +43,23 @@ int	find_max_pos(const t_stack *stack)
 	return (best);
 }
 
-/* Choisit le sens de rotation le plus court dans la pile a. */
-void	bring_a_to_top(t_ps *ps, int pos)
+/* Amène une position au sommet par le plus court des deux sens. */
+void	bring_to_top(t_ps *ps, t_stack *stack, int pos, t_op forward)
 {
-	if (pos <= ps->a.size / 2)
-	{
-		while (pos-- > 0)
-			exec_op(ps, OP_RA);
-	}
-	else
-	{
-		pos = ps->a.size - pos;
-		while (pos-- > 0)
-			exec_op(ps, OP_RRA);
-	}
-}
+	t_op	reverse;
 
-/* Choisit le sens de rotation le plus court dans la pile b. */
-void	bring_b_to_top(t_ps *ps, int pos)
-{
-	if (pos <= ps->b.size / 2)
+	reverse = OP_RRA;
+	if (forward == OP_RB)
+		reverse = OP_RRB;
+	if (pos <= stack->size / 2)
 	{
 		while (pos-- > 0)
-			exec_op(ps, OP_RB);
+			exec_op(ps, forward);
 	}
 	else
 	{
-		pos = ps->b.size - pos;
+		pos = stack->size - pos;
 		while (pos-- > 0)
-			exec_op(ps, OP_RRB);
+			exec_op(ps, reverse);
 	}
 }

@@ -13,7 +13,7 @@
 
 #include "push_swap.h"
 
-int	ft_isspace(char c)
+static int	ft_isspace(char c)
 {
 	return (c == ' ' || (c >= '\t' && c <= '\r'));
 }
@@ -53,7 +53,7 @@ static int	convert_digits(const char *str, int *cursor, int sign,
 	return (1);
 }
 
-int	parse_number(const char *str, int *cursor, int *value)
+static int	parse_number(const char *str, int *cursor, int *value)
 {
 	int	sign;
 

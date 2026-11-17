@@ -25,7 +25,7 @@ void	sort_simple(t_ps *ps)
 	while (target < size)
 	{
 		pos = find_rank_pos(&ps->a, target);
-		bring_a_to_top(ps, pos);
+		bring_to_top(ps, &ps->a, pos, OP_RA);
 		exec_op(ps, OP_PB);
 		target++;
 	}

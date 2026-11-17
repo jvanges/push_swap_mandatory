@@ -13,24 +13,6 @@
 
 #include "push_swap.h"
 
-static const char	*strategy_name(t_strategy strategy)
-{
-	if (strategy == SIMPLE)
-		return ("Simple");
-	if (strategy == MEDIUM)
-		return ("Medium");
-	return ("Complex");
-}
-
-static const char	*strategy_complexity(t_strategy strategy)
-{
-	if (strategy == SIMPLE)
-		return ("O(n^2)");
-	if (strategy == MEDIUM)
-		return ("O(n*sqrt(n))");
-	return ("O(n*log(n))");
-}
-
 /* Affiche le pourcentage avec deux décimales sans utiliser printf. */
 static void	print_disorder(double disorder)
 {
@@ -51,10 +33,13 @@ static void	print_strategy(t_strategy strategy, int adaptive)
 	ft_putstr_fd("[bench] strategy: ", STDERR_FILENO);
 	if (adaptive)
 		ft_putstr_fd("Adaptive -> ", STDERR_FILENO);
-	ft_putstr_fd(strategy_name(strategy), STDERR_FILENO);
-	ft_putstr_fd(" (", STDERR_FILENO);
-	ft_putstr_fd(strategy_complexity(strategy), STDERR_FILENO);
-	ft_putstr_fd(")\n", STDERR_FILENO);
+	if (strategy == SIMPLE)
+		ft_putstr_fd("Simple (O(n^2))", STDERR_FILENO);
+	else if (strategy == MEDIUM)
+		ft_putstr_fd("Medium (O(n*sqrt(n)))", STDERR_FILENO);
+	else
+		ft_putstr_fd("Complex (O(n*log(n)))", STDERR_FILENO);
+	ft_putchar_fd('\n', STDERR_FILENO);
 }
 
 void	print_bench(const t_ps *ps, double disorder,

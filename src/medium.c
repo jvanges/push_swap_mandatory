@@ -42,21 +42,6 @@ static void	extract_chunk(t_ps *ps, int low, int high, int remaining)
 	}
 }
 
-/* Replace les valeurs restantes au-dessus des blocs déjà triés. */
-static void	restore_remaining(t_ps *ps, int completed, int remaining)
-{
-	if (completed <= remaining)
-	{
-		while (completed-- > 0)
-			exec_op(ps, OP_RA);
-	}
-	else
-	{
-		while (remaining-- > 0)
-			exec_op(ps, OP_RRA);
-	}
-}
-
 /* Trie le bloc par extraction des maxima et le place sous les précédents. */
 static void	place_chunk(t_ps *ps, int amount)
 {
@@ -65,7 +50,7 @@ static void	place_chunk(t_ps *ps, int amount)
 	i = 0;
 	while (i < amount)
 	{
-		bring_b_to_top(ps, find_max_pos(&ps->b));
+		bring_to_top(ps, &ps->b, find_max_pos(&ps->b), OP_RB);
 		exec_op(ps, OP_PA);
 		i++;
 	}
@@ -97,7 +82,7 @@ void	sort_medium(t_ps *ps)
 			amount = size - completed;
 		extract_chunk(ps, completed, completed + amount - 1,
 			size - completed);
-		restore_remaining(ps, completed, size - completed - amount);
+		bring_to_top(ps, &ps->a, completed, OP_RA);
 		place_chunk(ps, amount);
 		completed += amount;
 	}

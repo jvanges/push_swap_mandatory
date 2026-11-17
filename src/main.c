@@ -13,30 +13,14 @@
 
 #include "push_swap.h"
 
-static void	init_counters(t_ps *ps)
-{
-	int	i;
-
-	ps->total = 0;
-	i = 0;
-	while (i < OP_COUNT)
-	{
-		ps->counts[i] = 0;
-		i++;
-	}
-}
-
 static int	init_stacks(t_ps *ps, int *values, int size)
 {
+	*ps = (t_ps){0};
 	ps->a.data = values;
 	ps->a.size = size;
-	ps->a.capacity = size;
 	ps->b.data = malloc((size_t)size * sizeof(int));
 	if (!ps->b.data)
 		return (0);
-	ps->b.size = 0;
-	ps->b.capacity = size;
-	init_counters(ps);
 	return (1);
 }
 

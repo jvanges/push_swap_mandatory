@@ -14,7 +14,7 @@
 #include "push_swap.h"
 
 /* Renvoie un code positif pour un drapeau et zéro pour une valeur. */
-int	flag_code(const char *str)
+static int	flag_code(const char *str)
 {
 	if (ft_streq(str, "--simple"))
 		return (SIMPLE + 1);

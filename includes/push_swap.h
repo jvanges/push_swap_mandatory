@@ -48,7 +48,6 @@ typedef struct s_stack
 {
 	int	*data;
 	int	size;
-	int	capacity;
 }	t_stack;
 
 typedef struct s_ps
@@ -68,10 +67,7 @@ typedef struct s_config
 
 int			parse_arguments(int argc, char **argv, t_config *config,
 				int **values);
-int			parse_number(const char *str, int *cursor, int *value);
 int			parse_string(const char *str, int *values, int *count);
-int			flag_code(const char *str);
-int			ft_isspace(char c);
 int			ft_streq(const char *left, const char *right);
 
 double		compute_disorder(const t_stack *stack);
@@ -88,16 +84,13 @@ const char	*op_name(t_op op);
 
 int			find_rank_pos(const t_stack *stack, int rank);
 int			find_max_pos(const t_stack *stack);
-void		bring_a_to_top(t_ps *ps, int pos);
-void		bring_b_to_top(t_ps *ps, int pos);
+void		bring_to_top(t_ps *ps, t_stack *stack, int pos, t_op forward);
 
 void		sort_simple(t_ps *ps);
 void		sort_medium(t_ps *ps);
 void		sort_complex(t_ps *ps);
-void		run_strategy(t_ps *ps, t_strategy strategy);
 void		execute_strategy(t_ps *ps, const t_config *config,
 				double disorder);
-t_strategy	adaptive_strategy(double disorder);
 
 void		print_bench(const t_ps *ps, double disorder,
 				t_strategy strategy, int adaptive);

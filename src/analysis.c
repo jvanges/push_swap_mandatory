@@ -22,14 +22,13 @@ double	compute_disorder(const t_stack *stack)
 	int		j;
 
 	mistakes = 0;
-	total = 0;
+	total = (long)stack->size * (stack->size - 1) / 2;
 	i = 0;
 	while (i < stack->size)
 	{
 		j = i + 1;
 		while (j < stack->size)
 		{
-			total++;
 			if (stack->data[i] > stack->data[j])
 				mistakes++;
 			j++;
