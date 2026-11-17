@@ -61,12 +61,27 @@ int	has_duplicates(const t_stack *stack)
 	return (0);
 }
 
+static int	compute_rank(const t_stack *stack, int index)
+{
+	int	rank;
+	int	j;
+
+	rank = 0;
+	j = 0;
+	while (j < stack->size)
+	{
+		if (stack->data[j] < stack->data[index])
+			rank++;
+		j++;
+	}
+	return (rank);
+}
+
 /* Remplace chaque valeur par son rang, compris entre zéro et n - 1. */
 int	normalize_stack(t_stack *stack)
 {
 	int	*ranks;
 	int	i;
-	int	j;
 
 	ranks = malloc((size_t)stack->size * sizeof(int));
 	if (!ranks)
@@ -74,14 +89,7 @@ int	normalize_stack(t_stack *stack)
 	i = 0;
 	while (i < stack->size)
 	{
-		ranks[i] = 0;
-		j = 0;
-		while (j < stack->size)
-		{
-			if (stack->data[j] < stack->data[i])
-				ranks[i]++;
-			j++;
-		}
+		ranks[i] = compute_rank(stack, i);
 		i++;
 	}
 	i = 0;

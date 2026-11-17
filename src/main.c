@@ -60,7 +60,6 @@ int	main(int argc, char **argv)
 {
 	t_config	config;
 	t_ps		ps;
-	t_strategy	strategy;
 	double		disorder;
 	int			size;
 	int			*values;
@@ -76,12 +75,7 @@ int	main(int argc, char **argv)
 		return (free(values), print_error(), 1);
 	if (!prepare_input(&ps, &disorder))
 		return (free_stacks(&ps), print_error(), 1);
-	strategy = config.strategy;
-	if (strategy == ADAPTIVE)
-		strategy = adaptive_strategy(disorder);
-	run_strategy(&ps, strategy);
-	if (config.bench)
-		print_bench(&ps, disorder, strategy, config.strategy == ADAPTIVE);
+	execute_strategy(&ps, &config, disorder);
 	free_stacks(&ps);
 	return (0);
 }

@@ -66,42 +66,44 @@ typedef struct s_config
 	int			strategy_seen;
 }	t_config;
 
-int		parse_arguments(int argc, char **argv, t_config *config,
-			int **values);
-int		parse_number(const char *str, int *cursor, int *value);
-int		parse_string(const char *str, int *values, int *count);
-int		flag_code(const char *str);
-int		ft_isspace(char c);
-int		ft_streq(const char *left, const char *right);
+int			parse_arguments(int argc, char **argv, t_config *config,
+				int **values);
+int			parse_number(const char *str, int *cursor, int *value);
+int			parse_string(const char *str, int *values, int *count);
+int			flag_code(const char *str);
+int			ft_isspace(char c);
+int			ft_streq(const char *left, const char *right);
 
-double	compute_disorder(const t_stack *stack);
-int		has_duplicates(const t_stack *stack);
-int		normalize_stack(t_stack *stack);
-int		is_sorted(const t_stack *stack);
+double		compute_disorder(const t_stack *stack);
+int			has_duplicates(const t_stack *stack);
+int			normalize_stack(t_stack *stack);
+int			is_sorted(const t_stack *stack);
 
-void	stack_swap(t_stack *stack);
-void	stack_push(t_stack *dst, t_stack *src);
-void	stack_rotate(t_stack *stack);
-void	stack_reverse(t_stack *stack);
-void	exec_op(t_ps *ps, t_op op);
+void		stack_swap(t_stack *stack);
+void		stack_push(t_stack *dst, t_stack *src);
+void		stack_rotate(t_stack *stack);
+void		stack_reverse(t_stack *stack);
+void		exec_op(t_ps *ps, t_op op);
 const char	*op_name(t_op op);
 
-int		find_rank_pos(const t_stack *stack, int rank);
-int		find_max_pos(const t_stack *stack);
-void	bring_a_to_top(t_ps *ps, int pos);
-void	bring_b_to_top(t_ps *ps, int pos);
+int			find_rank_pos(const t_stack *stack, int rank);
+int			find_max_pos(const t_stack *stack);
+void		bring_a_to_top(t_ps *ps, int pos);
+void		bring_b_to_top(t_ps *ps, int pos);
 
-void	sort_simple(t_ps *ps);
-void	sort_medium(t_ps *ps);
-void	sort_complex(t_ps *ps);
-void	run_strategy(t_ps *ps, t_strategy strategy);
+void		sort_simple(t_ps *ps);
+void		sort_medium(t_ps *ps);
+void		sort_complex(t_ps *ps);
+void		run_strategy(t_ps *ps, t_strategy strategy);
+void		execute_strategy(t_ps *ps, const t_config *config,
+				double disorder);
 t_strategy	adaptive_strategy(double disorder);
 
-void	print_bench(const t_ps *ps, double disorder,
-			t_strategy strategy, int adaptive);
-void	ft_putchar_fd(char c, int fd);
-void	ft_putstr_fd(const char *str, int fd);
-void	ft_putlong_fd(long value, int fd);
-void	print_error(void);
+void		print_bench(const t_ps *ps, double disorder,
+				t_strategy strategy, int adaptive);
+void		ft_putchar_fd(char c, int fd);
+void		ft_putstr_fd(const char *str, int fd);
+void		ft_putlong_fd(long value, int fd);
+void		print_error(void);
 
 #endif

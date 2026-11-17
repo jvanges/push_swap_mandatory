@@ -34,3 +34,15 @@ void	run_strategy(t_ps *ps, t_strategy strategy)
 	else
 		sort_complex(ps);
 }
+
+void	execute_strategy(t_ps *ps, const t_config *config, double disorder)
+{
+	t_strategy	strategy;
+
+	strategy = config->strategy;
+	if (strategy == ADAPTIVE)
+		strategy = adaptive_strategy(disorder);
+	run_strategy(ps, strategy);
+	if (config->bench)
+		print_bench(ps, disorder, strategy, config->strategy == ADAPTIVE);
+}
