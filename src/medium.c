@@ -25,65 +25,68 @@ static int	integer_sqrt(int value)
 }
 
 /* Isole un bloc en parcourant exactement les valeurs encore non triées. */
-static void	extract_chunk(t_ps *ps, int low, int high, int remaining)
+static void	extract_chunk(t_ps *push_swap, int min_rank, int max_rank,
+			int remaining_count)
 {
-	int	i;
-	int	rank;
+	int	scanned_count;
+	int	current_rank;
 
-	i = 0;
-	while (i < remaining)
+	scanned_count = 0;
+	while (scanned_count < remaining_count)
 	{
-		rank = ps->a.data[0];
-		if (rank >= low && rank <= high)
-			exec_op(ps, OP_PB);
+		current_rank = push_swap->a.data[0];
+		if (current_rank >= min_rank && current_rank <= max_rank)
+			exec_op(push_swap, OP_PB);
 		else
-			exec_op(ps, OP_RA);
-		i++;
+			exec_op(push_swap, OP_RA);
+		scanned_count++;
 	}
 }
 
 /* Trie le bloc par extraction des maxima et le place sous les précédents. */
-static void	place_chunk(t_ps *ps, int amount)
+static void	place_chunk(t_ps *push_swap, int current_chunk_size)
 {
-	int	i;
+	int	moved_count;
 
-	i = 0;
-	while (i < amount)
+	moved_count = 0;
+	while (moved_count < current_chunk_size)
 	{
-		bring_to_top(ps, &ps->b, find_max_pos(&ps->b), OP_RB);
-		exec_op(ps, OP_PA);
-		i++;
+		bring_to_top(push_swap, &push_swap->b,
+			find_max_pos(&push_swap->b), OP_RB);
+		exec_op(push_swap, OP_PA);
+		moved_count++;
 	}
-	i = 0;
-	while (i < amount)
+	moved_count = 0;
+	while (moved_count < current_chunk_size)
 	{
-		exec_op(ps, OP_RA);
-		i++;
+		exec_op(push_swap, OP_RA);
+		moved_count++;
 	}
 }
 
 /* Les blocs croissants sont concaténés sans extraction globale en O(n²). */
-void	sort_medium(t_ps *ps)
+void	sort_medium(t_ps *push_swap)
 {
 	int	size;
-	int	chunk;
-	int	completed;
-	int	amount;
+	int	chunk_size;
+	int	completed_count;
+	int	current_chunk_size;
 
-	size = ps->a.size;
-	chunk = integer_sqrt(size) * 5 / 2;
-	if (chunk < 1)
-		chunk = 1;
-	completed = 0;
-	while (completed < size)
+	size = push_swap->a.size;
+	chunk_size = integer_sqrt(size) * 5 / 2;
+	if (chunk_size < 1)
+		chunk_size = 1;
+	completed_count = 0;
+	while (completed_count < size)
 	{
-		amount = chunk;
-		if (amount > size - completed)
-			amount = size - completed;
-		extract_chunk(ps, completed, completed + amount - 1,
-			size - completed);
-		bring_to_top(ps, &ps->a, completed, OP_RA);
-		place_chunk(ps, amount);
-		completed += amount;
+		current_chunk_size = chunk_size;
+		if (current_chunk_size > size - completed_count)
+			current_chunk_size = size - completed_count;
+		extract_chunk(push_swap, completed_count,
+			completed_count + current_chunk_size - 1,
+			size - completed_count);
+		bring_to_top(push_swap, &push_swap->a, completed_count, OP_RA);
+		place_chunk(push_swap, current_chunk_size);
+		completed_count += current_chunk_size;
 	}
 }

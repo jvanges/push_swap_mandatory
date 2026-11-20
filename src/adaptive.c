@@ -14,31 +14,33 @@
 #include "push_swap.h"
 
 /* Les seuils sont ceux imposés par le sujet pour chaque régime. */
-static t_strategy	adaptive_strategy(double disorder)
+static t_strategy	adaptive_strategy(double disorder_ratio)
 {
-	if (disorder < 0.2)
+	if (disorder_ratio < 0.2)
 		return (SIMPLE);
-	if (disorder < 0.5)
+	if (disorder_ratio < 0.5)
 		return (MEDIUM);
 	return (COMPLEX);
 }
 
-void	execute_strategy(t_ps *ps, const t_config *config, double disorder)
+void	execute_strategy(t_ps *push_swap, const t_config *config,
+			double disorder_ratio)
 {
-	t_strategy	strategy;
+	t_strategy	selected_strategy;
 
-	strategy = config->strategy;
-	if (strategy == ADAPTIVE)
-		strategy = adaptive_strategy(disorder);
-	if (!is_sorted(&ps->a))
+	selected_strategy = config->strategy;
+	if (selected_strategy == ADAPTIVE)
+		selected_strategy = adaptive_strategy(disorder_ratio);
+	if (!is_sorted(&push_swap->a))
 	{
-		if (strategy == SIMPLE)
-			sort_simple(ps);
-		else if (strategy == MEDIUM)
-			sort_medium(ps);
+		if (selected_strategy == SIMPLE)
+			sort_simple(push_swap);
+		else if (selected_strategy == MEDIUM)
+			sort_medium(push_swap);
 		else
-			sort_complex(ps);
+			sort_complex(push_swap);
 	}
 	if (config->bench)
-		print_bench(ps, disorder, strategy, config->strategy == ADAPTIVE);
+		print_bench(push_swap, disorder_ratio, selected_strategy,
+			config->strategy == ADAPTIVE);
 }

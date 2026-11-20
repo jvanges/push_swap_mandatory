@@ -39,32 +39,32 @@ const char	*op_name(t_op op)
 }
 
 /* Applique la partie élémentaire d'une opération demandée. */
-static void	apply_single(t_ps *ps, t_op op)
+static void	apply_single(t_ps *push_swap, t_op op)
 {
 	if (op == OP_SA || op == OP_SS)
-		stack_swap(&ps->a);
+		stack_swap(&push_swap->a);
 	if (op == OP_SB || op == OP_SS)
-		stack_swap(&ps->b);
+		stack_swap(&push_swap->b);
 	if (op == OP_PA)
-		stack_push(&ps->a, &ps->b);
+		stack_push(&push_swap->a, &push_swap->b);
 	if (op == OP_PB)
-		stack_push(&ps->b, &ps->a);
+		stack_push(&push_swap->b, &push_swap->a);
 	if (op == OP_RA || op == OP_RR)
-		stack_rotate(&ps->a);
+		stack_rotate(&push_swap->a);
 	if (op == OP_RB || op == OP_RR)
-		stack_rotate(&ps->b);
+		stack_rotate(&push_swap->b);
 	if (op == OP_RRA || op == OP_RRR)
-		stack_reverse(&ps->a);
+		stack_reverse(&push_swap->a);
 	if (op == OP_RRB || op == OP_RRR)
-		stack_reverse(&ps->b);
+		stack_reverse(&push_swap->b);
 }
 
 /* Exécute, compte puis affiche une unique instruction Push_swap. */
-void	exec_op(t_ps *ps, t_op op)
+void	exec_op(t_ps *push_swap, t_op op)
 {
-	apply_single(ps, op);
-	ps->counts[op]++;
-	ps->total++;
+	apply_single(push_swap, op);
+	push_swap->counts[op]++;
+	push_swap->total++;
 	ft_putstr_fd(op_name(op), STDOUT_FILENO);
 	ft_putchar_fd('\n', STDOUT_FILENO);
 }

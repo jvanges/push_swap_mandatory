@@ -13,14 +13,14 @@
 
 #include "push_swap.h"
 
-int	find_rank_pos(const t_stack *stack, int rank)
+int	find_rank_pos(const t_stack *stack, int target_rank)
 {
 	int	i;
 
 	i = 0;
 	while (i < stack->size)
 	{
-		if (stack->data[i] == rank)
+		if (stack->data[i] == target_rank)
 			return (i);
 		i++;
 	}
@@ -30,36 +30,37 @@ int	find_rank_pos(const t_stack *stack, int rank)
 int	find_max_pos(const t_stack *stack)
 {
 	int	i;
-	int	best;
+	int	max_position;
 
 	i = 1;
-	best = 0;
+	max_position = 0;
 	while (i < stack->size)
 	{
-		if (stack->data[i] > stack->data[best])
-			best = i;
+		if (stack->data[i] > stack->data[max_position])
+			max_position = i;
 		i++;
 	}
-	return (best);
+	return (max_position);
 }
 
 /* Amène une position au sommet par le plus court des deux sens. */
-void	bring_to_top(t_ps *ps, t_stack *stack, int pos, t_op forward)
+void	bring_to_top(t_ps *push_swap, t_stack *stack, int target_position,
+			t_op forward)
 {
 	t_op	reverse;
 
 	reverse = OP_RRA;
 	if (forward == OP_RB)
 		reverse = OP_RRB;
-	if (pos <= stack->size / 2)
+	if (target_position <= stack->size / 2)
 	{
-		while (pos-- > 0)
-			exec_op(ps, forward);
+		while (target_position-- > 0)
+			exec_op(push_swap, forward);
 	}
 	else
 	{
-		pos = stack->size - pos;
-		while (pos-- > 0)
-			exec_op(ps, reverse);
+		target_position = stack->size - target_position;
+		while (target_position-- > 0)
+			exec_op(push_swap, reverse);
 	}
 }

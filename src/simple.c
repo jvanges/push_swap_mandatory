@@ -14,21 +14,21 @@
 #include "push_swap.h"
 
 /* Extrait successivement le minimum, puis reconstruit a dans l'ordre. */
-void	sort_simple(t_ps *ps)
+void	sort_simple(t_ps *push_swap)
 {
-	int	target;
-	int	pos;
-	int	size;
+	int	target_rank;
+	int	minimum_position;
+	int	initial_size;
 
-	target = 0;
-	size = ps->a.size;
-	while (target < size)
+	target_rank = 0;
+	initial_size = push_swap->a.size;
+	while (target_rank < initial_size)
 	{
-		pos = find_rank_pos(&ps->a, target);
-		bring_to_top(ps, &ps->a, pos, OP_RA);
-		exec_op(ps, OP_PB);
-		target++;
+		minimum_position = find_rank_pos(&push_swap->a, target_rank);
+		bring_to_top(push_swap, &push_swap->a, minimum_position, OP_RA);
+		exec_op(push_swap, OP_PB);
+		target_rank++;
 	}
-	while (ps->b.size > 0)
-		exec_op(ps, OP_PA);
+	while (push_swap->b.size > 0)
+		exec_op(push_swap, OP_PA);
 }

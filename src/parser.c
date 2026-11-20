@@ -14,7 +14,7 @@
 #include "push_swap.h"
 
 /* Renvoie un code positif pour un drapeau et zéro pour une valeur. */
-static int	flag_code(const char *str)
+static int	get_flag_code(const char *str)
 {
 	if (ft_streq(str, "--simple"))
 		return (SIMPLE + 1);
@@ -30,9 +30,9 @@ static int	flag_code(const char *str)
 }
 
 /* Enregistre un drapeau en refusant les sélecteurs contradictoires. */
-static int	apply_flag(t_config *config, int code)
+static int	apply_flag(t_config *config, int flag_code)
 {
-	if (code == 5)
+	if (flag_code == 5)
 	{
 		if (config->bench)
 			return (0);
@@ -41,44 +41,44 @@ static int	apply_flag(t_config *config, int code)
 	}
 	if (config->strategy_seen)
 		return (0);
-	config->strategy = (t_strategy)(code - 1);
+	config->strategy = (t_strategy)(flag_code - 1);
 	config->strategy_seen = 1;
 	return (1);
 }
 
-static int	parse_first_pass(int argc, char **argv, t_config *config,
-			int *count)
+static int	scan_arguments(int argc, char **argv, t_config *config,
+			int *number_count)
 {
 	int	i;
-	int	code;
+	int	flag_code;
 
 	i = 1;
 	while (i < argc)
 	{
-		code = flag_code(argv[i]);
-		if (code)
+		flag_code = get_flag_code(argv[i]);
+		if (flag_code)
 		{
-			if (!apply_flag(config, code))
+			if (!apply_flag(config, flag_code))
 				return (0);
 		}
-		else if (parse_string(argv[i], NULL, count) < 0)
+		else if (parse_string(argv[i], NULL, number_count) < 0)
 			return (0);
 		i++;
 	}
 	return (1);
 }
 
-static void	parse_second_pass(int argc, char **argv, int *values)
+static void	fill_input_values(int argc, char **argv, int *values)
 {
 	int	i;
-	int	count;
+	int	number_count;
 
 	i = 1;
-	count = 0;
+	number_count = 0;
 	while (i < argc)
 	{
-		if (!flag_code(argv[i]))
-			parse_string(argv[i], values, &count);
+		if (!get_flag_code(argv[i]))
+			parse_string(argv[i], values, &number_count);
 		i++;
 	}
 }
@@ -86,20 +86,20 @@ static void	parse_second_pass(int argc, char **argv, int *values)
 /* Deux passages permettent une allocation exacte sans realloc. */
 int	parse_arguments(int argc, char **argv, t_config *config, int **values)
 {
-	int	count;
+	int	number_count;
 
 	config->strategy = ADAPTIVE;
 	config->bench = 0;
 	config->strategy_seen = 0;
-	count = 0;
+	number_count = 0;
 	*values = NULL;
-	if (!parse_first_pass(argc, argv, config, &count))
+	if (!scan_arguments(argc, argv, config, &number_count))
 		return (-1);
-	if (count == 0)
+	if (number_count == 0)
 		return (0);
-	*values = malloc((size_t)count * sizeof(int));
+	*values = malloc((size_t)number_count * sizeof(int));
 	if (!*values)
 		return (-1);
-	parse_second_pass(argc, argv, *values);
-	return (count);
+	fill_input_values(argc, argv, *values);
+	return (number_count);
 }

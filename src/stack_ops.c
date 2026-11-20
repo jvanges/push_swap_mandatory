@@ -25,28 +25,28 @@ void	stack_swap(t_stack *stack)
 	stack->data[1] = tmp;
 }
 
-/* Déplace le sommet de src vers dst en conservant l'ordre des piles. */
-void	stack_push(t_stack *dst, t_stack *src)
+/* Déplace le sommet de source vers destination en conservant leur ordre. */
+void	stack_push(t_stack *destination, t_stack *source)
 {
 	int	i;
 
-	if (src->size == 0)
+	if (source->size == 0)
 		return ;
-	i = dst->size;
+	i = destination->size;
 	while (i > 0)
 	{
-		dst->data[i] = dst->data[i - 1];
+		destination->data[i] = destination->data[i - 1];
 		i--;
 	}
-	dst->data[0] = src->data[0];
-	dst->size++;
+	destination->data[0] = source->data[0];
+	destination->size++;
 	i = 0;
-	while (i < src->size - 1)
+	while (i < source->size - 1)
 	{
-		src->data[i] = src->data[i + 1];
+		source->data[i] = source->data[i + 1];
 		i++;
 	}
-	src->size--;
+	source->size--;
 }
 
 /* Fait passer le premier élément à la dernière position. */

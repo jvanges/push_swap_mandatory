@@ -76,24 +76,25 @@ int			normalize_stack(t_stack *stack);
 int			is_sorted(const t_stack *stack);
 
 void		stack_swap(t_stack *stack);
-void		stack_push(t_stack *dst, t_stack *src);
+void		stack_push(t_stack *destination, t_stack *source);
 void		stack_rotate(t_stack *stack);
 void		stack_reverse(t_stack *stack);
-void		exec_op(t_ps *ps, t_op op);
+void		exec_op(t_ps *push_swap, t_op op);
 const char	*op_name(t_op op);
 
-int			find_rank_pos(const t_stack *stack, int rank);
+int			find_rank_pos(const t_stack *stack, int target_rank);
 int			find_max_pos(const t_stack *stack);
-void		bring_to_top(t_ps *ps, t_stack *stack, int pos, t_op forward);
+void		bring_to_top(t_ps *push_swap, t_stack *stack,
+				int target_position, t_op forward);
 
-void		sort_simple(t_ps *ps);
-void		sort_medium(t_ps *ps);
-void		sort_complex(t_ps *ps);
-void		execute_strategy(t_ps *ps, const t_config *config,
-				double disorder);
+void		sort_simple(t_ps *push_swap);
+void		sort_medium(t_ps *push_swap);
+void		sort_complex(t_ps *push_swap);
+void		execute_strategy(t_ps *push_swap, const t_config *config,
+				double disorder_ratio);
 
-void		print_bench(const t_ps *ps, double disorder,
-				t_strategy strategy, int adaptive);
+void		print_bench(const t_ps *push_swap, double disorder_ratio,
+				t_strategy selected_strategy, int is_adaptive);
 void		ft_putchar_fd(char c, int fd);
 void		ft_putstr_fd(const char *str, int fd);
 void		ft_putlong_fd(long value, int fd);

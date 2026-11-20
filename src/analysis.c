@@ -16,13 +16,13 @@
 /* Compte les inversions, normalisées par le nombre total de paires. */
 double	compute_disorder(const t_stack *stack)
 {
-	long	mistakes;
-	long	total;
+	long	inversion_count;
+	long	total_pairs;
 	int		i;
 	int		j;
 
-	mistakes = 0;
-	total = (long)stack->size * (stack->size - 1) / 2;
+	inversion_count = 0;
+	total_pairs = (long)stack->size * (stack->size - 1) / 2;
 	i = 0;
 	while (i < stack->size)
 	{
@@ -30,14 +30,14 @@ double	compute_disorder(const t_stack *stack)
 		while (j < stack->size)
 		{
 			if (stack->data[i] > stack->data[j])
-				mistakes++;
+				inversion_count++;
 			j++;
 		}
 		i++;
 	}
-	if (total == 0)
+	if (total_pairs == 0)
 		return (0.0);
-	return ((double)mistakes / (double)total);
+	return ((double)inversion_count / (double)total_pairs);
 }
 
 int	has_duplicates(const t_stack *stack)
@@ -79,25 +79,25 @@ static int	compute_rank(const t_stack *stack, int index)
 /* Remplace chaque valeur par son rang, compris entre zéro et n - 1. */
 int	normalize_stack(t_stack *stack)
 {
-	int	*ranks;
+	int	*normalized_ranks;
 	int	i;
 
-	ranks = malloc((size_t)stack->size * sizeof(int));
-	if (!ranks)
+	normalized_ranks = malloc((size_t)stack->size * sizeof(int));
+	if (!normalized_ranks)
 		return (0);
 	i = 0;
 	while (i < stack->size)
 	{
-		ranks[i] = compute_rank(stack, i);
+		normalized_ranks[i] = compute_rank(stack, i);
 		i++;
 	}
 	i = 0;
 	while (i < stack->size)
 	{
-		stack->data[i] = ranks[i];
+		stack->data[i] = normalized_ranks[i];
 		i++;
 	}
-	free(ranks);
+	free(normalized_ranks);
 	return (1);
 }
 

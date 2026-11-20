@@ -13,29 +13,29 @@
 
 #include "push_swap.h"
 
-static int	init_stacks(t_ps *ps, int *values, int size)
+static int	init_stacks(t_ps *push_swap, int *input_values, int stack_size)
 {
-	*ps = (t_ps){0};
-	ps->a.data = values;
-	ps->a.size = size;
-	ps->b.data = malloc((size_t)size * sizeof(int));
-	if (!ps->b.data)
+	*push_swap = (t_ps){0};
+	push_swap->a.data = input_values;
+	push_swap->a.size = stack_size;
+	push_swap->b.data = malloc((size_t)stack_size * sizeof(int));
+	if (!push_swap->b.data)
 		return (0);
 	return (1);
 }
 
-static void	free_stacks(t_ps *ps)
+static void	free_stacks(t_ps *push_swap)
 {
-	free(ps->a.data);
-	free(ps->b.data);
+	free(push_swap->a.data);
+	free(push_swap->b.data);
 }
 
-static int	prepare_input(t_ps *ps, double *disorder)
+static int	prepare_input(t_ps *push_swap, double *disorder_ratio)
 {
-	if (has_duplicates(&ps->a))
+	if (has_duplicates(&push_swap->a))
 		return (0);
-	*disorder = compute_disorder(&ps->a);
-	if (!normalize_stack(&ps->a))
+	*disorder_ratio = compute_disorder(&push_swap->a);
+	if (!normalize_stack(&push_swap->a))
 		return (0);
 	return (1);
 }
@@ -43,23 +43,23 @@ static int	prepare_input(t_ps *ps, double *disorder)
 int	main(int argc, char **argv)
 {
 	t_config	config;
-	t_ps		ps;
-	double		disorder;
-	int			size;
-	int			*values;
+	t_ps		push_swap;
+	double		disorder_ratio;
+	int			stack_size;
+	int			*input_values;
 
 	if (argc == 1)
 		return (0);
-	size = parse_arguments(argc, argv, &config, &values);
-	if (size < 0)
+	stack_size = parse_arguments(argc, argv, &config, &input_values);
+	if (stack_size < 0)
 		return (print_error(), 1);
-	if (size == 0)
+	if (stack_size == 0)
 		return (0);
-	if (!init_stacks(&ps, values, size))
-		return (free(values), print_error(), 1);
-	if (!prepare_input(&ps, &disorder))
-		return (free_stacks(&ps), print_error(), 1);
-	execute_strategy(&ps, &config, disorder);
-	free_stacks(&ps);
+	if (!init_stacks(&push_swap, input_values, stack_size))
+		return (free(input_values), print_error(), 1);
+	if (!prepare_input(&push_swap, &disorder_ratio))
+		return (free_stacks(&push_swap), print_error(), 1);
+	execute_strategy(&push_swap, &config, disorder_ratio);
+	free_stacks(&push_swap);
 	return (0);
 }

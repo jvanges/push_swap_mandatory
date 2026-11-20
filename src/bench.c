@@ -14,52 +14,52 @@
 #include "push_swap.h"
 
 /* Affiche le pourcentage avec deux décimales sans utiliser printf. */
-static void	print_disorder(double disorder)
+static void	print_disorder(double disorder_ratio)
 {
-	long	scaled;
+	long	scaled_percent;
 
-	scaled = (long)(disorder * 10000.0 + 0.5);
+	scaled_percent = (long)(disorder_ratio * 10000.0 + 0.5);
 	ft_putstr_fd("[bench] disorder: ", STDERR_FILENO);
-	ft_putlong_fd(scaled / 100, STDERR_FILENO);
+	ft_putlong_fd(scaled_percent / 100, STDERR_FILENO);
 	ft_putchar_fd('.', STDERR_FILENO);
-	if (scaled % 100 < 10)
+	if (scaled_percent % 100 < 10)
 		ft_putchar_fd('0', STDERR_FILENO);
-	ft_putlong_fd(scaled % 100, STDERR_FILENO);
+	ft_putlong_fd(scaled_percent % 100, STDERR_FILENO);
 	ft_putstr_fd("%\n", STDERR_FILENO);
 }
 
-static void	print_strategy(t_strategy strategy, int adaptive)
+static void	print_strategy(t_strategy selected_strategy, int is_adaptive)
 {
 	ft_putstr_fd("[bench] strategy: ", STDERR_FILENO);
-	if (adaptive)
+	if (is_adaptive)
 		ft_putstr_fd("Adaptive -> ", STDERR_FILENO);
-	if (strategy == SIMPLE)
+	if (selected_strategy == SIMPLE)
 		ft_putstr_fd("Simple (O(n^2))", STDERR_FILENO);
-	else if (strategy == MEDIUM)
+	else if (selected_strategy == MEDIUM)
 		ft_putstr_fd("Medium (O(n*sqrt(n)))", STDERR_FILENO);
 	else
 		ft_putstr_fd("Complex (O(n*log(n)))", STDERR_FILENO);
 	ft_putchar_fd('\n', STDERR_FILENO);
 }
 
-void	print_bench(const t_ps *ps, double disorder,
-			t_strategy strategy, int adaptive)
+void	print_bench(const t_ps *push_swap, double disorder_ratio,
+			t_strategy selected_strategy, int is_adaptive)
 {
-	int	op;
+	int	op_index;
 
-	print_disorder(disorder);
-	print_strategy(strategy, adaptive);
+	print_disorder(disorder_ratio);
+	print_strategy(selected_strategy, is_adaptive);
 	ft_putstr_fd("[bench] total operations: ", STDERR_FILENO);
-	ft_putlong_fd(ps->total, STDERR_FILENO);
+	ft_putlong_fd(push_swap->total, STDERR_FILENO);
 	ft_putchar_fd('\n', STDERR_FILENO);
-	op = 0;
-	while (op < OP_COUNT)
+	op_index = 0;
+	while (op_index < OP_COUNT)
 	{
 		ft_putstr_fd("[bench] ", STDERR_FILENO);
-		ft_putstr_fd(op_name((t_op)op), STDERR_FILENO);
+		ft_putstr_fd(op_name((t_op)op_index), STDERR_FILENO);
 		ft_putstr_fd(": ", STDERR_FILENO);
-		ft_putlong_fd(ps->counts[op], STDERR_FILENO);
+		ft_putlong_fd(push_swap->counts[op_index], STDERR_FILENO);
 		ft_putchar_fd('\n', STDERR_FILENO);
-		op++;
+		op_index++;
 	}
 }
