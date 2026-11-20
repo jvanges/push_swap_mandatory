@@ -33,7 +33,7 @@ typedef enum e_op
 	OP_RRB,
 	OP_RRR,
 	OP_COUNT
-}	t_op;
+}	t_operation;
 
 typedef enum e_strategy
 {
@@ -56,7 +56,7 @@ typedef struct s_ps
 	t_stack	b;
 	long	counts[OP_COUNT];
 	long	total;
-}	t_ps;
+}	t_push_swap;
 
 typedef struct s_config
 {
@@ -79,21 +79,21 @@ void		stack_swap(t_stack *stack);
 void		stack_push(t_stack *destination, t_stack *source);
 void		stack_rotate(t_stack *stack);
 void		stack_reverse(t_stack *stack);
-void		exec_op(t_ps *push_swap, t_op op);
-const char	*op_name(t_op op);
+void		exec_op(t_push_swap *push_swap, t_operation op);
+const char	*op_name(t_operation op);
 
 int			find_rank_pos(const t_stack *stack, int target_rank);
 int			find_max_pos(const t_stack *stack);
-void		bring_to_top(t_ps *push_swap, t_stack *stack,
-				int target_position, t_op forward);
+void		bring_to_top(t_push_swap *push_swap, t_stack *stack,
+				int target_position, t_operation forward);
 
-void		sort_simple(t_ps *push_swap);
-void		sort_medium(t_ps *push_swap);
-void		sort_complex(t_ps *push_swap);
-void		execute_strategy(t_ps *push_swap, const t_config *config,
+void		sort_simple(t_push_swap *push_swap);
+void		sort_medium(t_push_swap *push_swap);
+void		sort_complex(t_push_swap *push_swap);
+void		execute_strategy(t_push_swap *push_swap, const t_config *config,
 				double disorder_ratio);
 
-void		print_bench(const t_ps *push_swap, double disorder_ratio,
+void		print_bench(const t_push_swap *push_swap, double disorder_ratio,
 				t_strategy selected_strategy, int is_adaptive);
 void		ft_putchar_fd(char c, int fd);
 void		ft_putstr_fd(const char *str, int fd);

@@ -23,7 +23,7 @@ static t_strategy	adaptive_strategy(double disorder_ratio)
 	return (COMPLEX);
 }
 
-void	execute_strategy(t_ps *push_swap, const t_config *config,
+void	execute_strategy(t_push_swap *push_swap, const t_config *config,
 			double disorder_ratio)
 {
 	t_strategy	selected_strategy;

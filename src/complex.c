@@ -26,7 +26,7 @@ static int	bit_count(int size)
 }
 
 /* Un passage stable sépare les rangs selon la valeur d'un bit. */
-static void	radix_pass(t_ps *push_swap, int current_bit)
+static void	radix_pass(t_push_swap *push_swap, int current_bit)
 {
 	int	i;
 	int	size;
@@ -46,7 +46,7 @@ static void	radix_pass(t_ps *push_swap, int current_bit)
 }
 
 /* Le radix LSD trie n rangs en au plus log2(n) passages linéaires. */
-void	sort_complex(t_ps *push_swap)
+void	sort_complex(t_push_swap *push_swap)
 {
 	int	current_bit;
 	int	total_bits;

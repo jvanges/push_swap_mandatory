@@ -13,7 +13,7 @@
 
 #include "push_swap.h"
 
-const char	*op_name(t_op op)
+const char	*op_name(t_operation op)
 {
 	if (op == OP_SA)
 		return ("sa");
@@ -39,7 +39,7 @@ const char	*op_name(t_op op)
 }
 
 /* Applique la partie élémentaire d'une opération demandée. */
-static void	apply_single(t_ps *push_swap, t_op op)
+static void	apply_single(t_push_swap *push_swap, t_operation op)
 {
 	if (op == OP_SA || op == OP_SS)
 		stack_swap(&push_swap->a);
@@ -60,7 +60,7 @@ static void	apply_single(t_ps *push_swap, t_op op)
 }
 
 /* Exécute, compte puis affiche une unique instruction Push_swap. */
-void	exec_op(t_ps *push_swap, t_op op)
+void	exec_op(t_push_swap *push_swap, t_operation op)
 {
 	apply_single(push_swap, op);
 	push_swap->counts[op]++;

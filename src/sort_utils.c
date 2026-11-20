@@ -44,10 +44,10 @@ int	find_max_pos(const t_stack *stack)
 }
 
 /* Amène une position au sommet par le plus court des deux sens. */
-void	bring_to_top(t_ps *push_swap, t_stack *stack, int target_position,
-			t_op forward)
+void	bring_to_top(t_push_swap *push_swap, t_stack *stack,
+			int target_position, t_operation forward)
 {
-	t_op	reverse;
+	t_operation	reverse;
 
 	reverse = OP_RRA;
 	if (forward == OP_RB)

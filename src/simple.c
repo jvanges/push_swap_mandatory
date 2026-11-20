@@ -14,7 +14,7 @@
 #include "push_swap.h"
 
 /* Extrait successivement le minimum, puis reconstruit a dans l'ordre. */
-void	sort_simple(t_ps *push_swap)
+void	sort_simple(t_push_swap *push_swap)
 {
 	int	target_rank;
 	int	minimum_position;

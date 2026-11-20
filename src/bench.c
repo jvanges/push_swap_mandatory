@@ -42,7 +42,7 @@ static void	print_strategy(t_strategy selected_strategy, int is_adaptive)
 	ft_putchar_fd('\n', STDERR_FILENO);
 }
 
-void	print_bench(const t_ps *push_swap, double disorder_ratio,
+void	print_bench(const t_push_swap *push_swap, double disorder_ratio,
 			t_strategy selected_strategy, int is_adaptive)
 {
 	int	op_index;
@@ -56,7 +56,7 @@ void	print_bench(const t_ps *push_swap, double disorder_ratio,
 	while (op_index < OP_COUNT)
 	{
 		ft_putstr_fd("[bench] ", STDERR_FILENO);
-		ft_putstr_fd(op_name((t_op)op_index), STDERR_FILENO);
+		ft_putstr_fd(op_name((t_operation)op_index), STDERR_FILENO);
 		ft_putstr_fd(": ", STDERR_FILENO);
 		ft_putlong_fd(push_swap->counts[op_index], STDERR_FILENO);
 		ft_putchar_fd('\n', STDERR_FILENO);

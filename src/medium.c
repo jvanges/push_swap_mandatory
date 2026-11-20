@@ -25,7 +25,7 @@ static int	integer_sqrt(int value)
 }
 
 /* Isole un bloc en parcourant exactement les valeurs encore non triées. */
-static void	extract_chunk(t_ps *push_swap, int min_rank, int max_rank,
+static void	extract_chunk(t_push_swap *push_swap, int min_rank, int max_rank,
 			int remaining_count)
 {
 	int	scanned_count;
@@ -44,7 +44,7 @@ static void	extract_chunk(t_ps *push_swap, int min_rank, int max_rank,
 }
 
 /* Trie le bloc par extraction des maxima et le place sous les précédents. */
-static void	place_chunk(t_ps *push_swap, int current_chunk_size)
+static void	place_chunk(t_push_swap *push_swap, int current_chunk_size)
 {
 	int	moved_count;
 
@@ -65,7 +65,7 @@ static void	place_chunk(t_ps *push_swap, int current_chunk_size)
 }
 
 /* Les blocs croissants sont concaténés sans extraction globale en O(n²). */
-void	sort_medium(t_ps *push_swap)
+void	sort_medium(t_push_swap *push_swap)
 {
 	int	size;
 	int	chunk_size;

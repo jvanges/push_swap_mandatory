@@ -13,9 +13,10 @@
 
 #include "push_swap.h"
 
-static int	init_stacks(t_ps *push_swap, int *input_values, int stack_size)
+static int	init_stacks(t_push_swap *push_swap, int *input_values,
+			int stack_size)
 {
-	*push_swap = (t_ps){0};
+	*push_swap = (t_push_swap){0};
 	push_swap->a.data = input_values;
 	push_swap->a.size = stack_size;
 	push_swap->b.data = malloc((size_t)stack_size * sizeof(int));
@@ -24,13 +25,13 @@ static int	init_stacks(t_ps *push_swap, int *input_values, int stack_size)
 	return (1);
 }
 
-static void	free_stacks(t_ps *push_swap)
+static void	free_stacks(t_push_swap *push_swap)
 {
 	free(push_swap->a.data);
 	free(push_swap->b.data);
 }
 
-static int	prepare_input(t_ps *push_swap, double *disorder_ratio)
+static int	prepare_input(t_push_swap *push_swap, double *disorder_ratio)
 {
 	if (has_duplicates(&push_swap->a))
 		return (0);
@@ -43,7 +44,7 @@ static int	prepare_input(t_ps *push_swap, double *disorder_ratio)
 int	main(int argc, char **argv)
 {
 	t_config	config;
-	t_ps		push_swap;
+	t_push_swap		push_swap;
 	double		disorder_ratio;
 	int			stack_size;
 	int			*input_values;
